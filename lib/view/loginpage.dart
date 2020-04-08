@@ -37,9 +37,39 @@ class LoginPageState extends State<LoginPage> {
       //First item is Scaffold///////////////////////////////////////////////
       //center title
       appBar: AppBar(
-        title: new Center(child: new Text("Login", style: TextStyle(color: Color.fromARGB(250, 0, 0, 0)),)),
-      //change color of appBar
-      backgroundColor: Color.fromARGB(100, 0, 100, 255),
+        title: new Center(
+            child: new Text(
+          "Login",
+          style: TextStyle(color: Color.fromARGB(250, 0, 0, 0)),
+        )),
+        //change color of appBar
+        backgroundColor: Color.fromARGB(100, 0, 100, 255),
+
+        //allows to add mulitle things in appbar
+        actions: <Widget>[
+          
+          //represent strings
+          PopupMenuButton<String>(
+
+            //gets selected button/popupmenuitem
+            onSelected: (value) {
+              //prints value of selected menu button
+              print("Menu: " + value);
+            },
+            //calling from cotroller not appbar
+
+            itemBuilder: (BuildContext context) {
+              //Give menu Items in list
+              return <PopupMenuEntry<String>>[
+                PopupMenuItem(
+                  value: "Reg",
+                  //how we want to display
+                  child: Text("Register"),
+                ),
+              ];
+            },
+          )
+        ],
       ),
 
       //Second item is Scaffold//////////////////////////////////////////////
@@ -69,8 +99,8 @@ class LoginPageState extends State<LoginPage> {
             //set keyboard
             keyboardType: TextInputType.visiblePassword,
             autocorrect: false,
-            validator: (value){},
-            onSaved: (value){},
+            validator: (value) {},
+            onSaved: (value) {},
           ),
 
           // //Column first item
