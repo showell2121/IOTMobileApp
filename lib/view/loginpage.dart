@@ -47,10 +47,8 @@ class LoginPageState extends State<LoginPage> {
 
         //allows to add mulitle things in appbar
         actions: <Widget>[
-          
           //represent strings
           PopupMenuButton<String>(
-
             //gets selected button/popupmenuitem
             onSelected: (value) {
               //prints value of selected menu button
@@ -61,6 +59,7 @@ class LoginPageState extends State<LoginPage> {
             itemBuilder: (BuildContext context) {
               //Give menu Items in list
               return <PopupMenuEntry<String>>[
+                //First item in list
                 PopupMenuItem(
                   value: "Reg",
                   //how we want to display
@@ -79,29 +78,37 @@ class LoginPageState extends State<LoginPage> {
           //gets image from folders
           new Center(child: Image.asset('assets/images/pic9.jpg')),
 
-          //Create text field for username
-          TextFormField(
-            decoration: InputDecoration(
-                icon: Icon(Icons.email), hintText: "Email Address"),
-            keyboardType: TextInputType.emailAddress,
-            autocorrect: false,
-          ),
+          //Form
+          Form(
+              child: Expanded(
+            child: ListView(
+              children: <Widget>[
+                //Create text field for username
+                TextFormField(
+                  decoration: InputDecoration(
+                      icon: Icon(Icons.email), hintText: "Email Address"),
+                  keyboardType: TextInputType.emailAddress,
+                  autocorrect: false,
+                ),
 
-          //Create textfield for password
-          TextFormField(
-            decoration: InputDecoration(
-              icon: Icon(Icons.security),
-              hintText: "Password",
+                //Create textfield for password
+                TextFormField(
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.security),
+                    hintText: "Password",
+                  ),
+
+                  //show text back to user
+                  obscureText: true,
+                  //set keyboard
+                  keyboardType: TextInputType.visiblePassword,
+                  autocorrect: false,
+                  validator: (value) {},
+                  onSaved: (value) {},
+                ),
+              ],
             ),
-
-            //show text back to user
-            obscureText: true,
-            //set keyboard
-            keyboardType: TextInputType.visiblePassword,
-            autocorrect: false,
-            validator: (value) {},
-            onSaved: (value) {},
-          ),
+          )),
 
           // //Column first item
           // Text(
