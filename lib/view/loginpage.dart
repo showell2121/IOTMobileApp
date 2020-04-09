@@ -15,10 +15,12 @@ class LoginPage extends StatefulWidget {
 //creates class
 //This is the current state of the page
 class LoginPageState extends State<LoginPage> {
-  //variables
+  //member variables
   LoginController controller;
   //allows controller to have access to context
   BuildContext context;
+  //form key
+  var formKey = GlobalKey<FormState>();
   
 
   //constructor
@@ -95,6 +97,7 @@ class LoginPageState extends State<LoginPage> {
 
           //Form
           Form(
+            key: formKey,
               child: Expanded(
             child: ListView(
               children: <Widget>[
@@ -103,8 +106,8 @@ class LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       icon: Icon(Icons.email), hintText: "Email Address"),
                   keyboardType: TextInputType.emailAddress,
-                  //validator: controller.validateNum1,
-                  //onSaved: controller.saveNum1(),
+                  validator: controller.validateEmail,
+                  onSaved: controller.saveEmail,
                   autocorrect: false,
                 ),
 
@@ -120,9 +123,16 @@ class LoginPageState extends State<LoginPage> {
                   //set keyboard
                   keyboardType: TextInputType.visiblePassword,
                   autocorrect: false,
-                  validator: (value) {},
-                  onSaved: (value) {},
+                  validator: controller.validatePass,
+                  onSaved: controller.savePassword,
                 ),
+
+                //create Button
+                RaisedButton(
+                  child: Text("Login"),
+                  onPressed: controller.login,
+                )
+
               ],
             ),
           )),
