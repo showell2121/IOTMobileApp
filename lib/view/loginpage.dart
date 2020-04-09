@@ -1,5 +1,6 @@
 //create class
 import 'package:flutter/material.dart';
+//import '../model/user.dart';
 import '../controller/loginController.dart';
 
 
@@ -21,6 +22,8 @@ class LoginPageState extends State<LoginPage> {
   BuildContext context;
   //form key
   var formKey = GlobalKey<FormState>();
+
+  //User user = new User();
   
 
   //constructor

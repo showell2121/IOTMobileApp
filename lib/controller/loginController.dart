@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import '../view/homepage.dart';
 import "../model/user.dart";
 
 import '../view/loginPage.dart';
 import "../view/registrationPage.dart";
 
+import "./firebase.dart";
+
 class LoginController {
+
   //creates LoginPage state
-  LoginPageState state;
+  LoginPageState state;  
 
   User user = User();
+  
 
   //Set constructor to current state.// same as: state = value;
   LoginController(this.state);
@@ -55,25 +60,48 @@ class LoginController {
     }
   }
 
-  //////////////////////////////////////End Validate
+  //////////////////////////////////////End 
   ///
   //////////////////////////////////////Save User Input
-  void login() {
+  void login() async{
+
+    
     //make sure all input fields are correct
     //calling all the validators back at the loginpage
     if (state.formKey.currentState.validate()) {
+
+      //Saves user data
       //when .save() is called, all onsave: functions in loginPage will be called and object
       //will be intialized
       state.formKey.currentState.save();
-    }
 
-    if(user.email == "showell2121@gmail.com"){
-      print("//////////////////////////////CORECTemail");
-    }else{
-      print("//////////////////////////////////WRONG EMAIL");
-    }
-  }
-  ///////////////////////////////////////////End Save
+      try{
+
+        //print("////////////////////////////////// LOGIN");
+        //print(user.email);
+
+        user.uid = await Firebase.login(email: user.email, password: user.password);
+
+        Navigator.push(
+          state.context,
+          MaterialPageRoute(
+            //shorthand notation. return destin.. with brackets
+            builder: (BuildContext context) => HomePage(),
+          ));
+      }catch(err){
+        print("ERROR: In login() loignController");
+      }
+      
+      if(user.uid != null){
+
+      }
+      //login in to Firebase;
+
+    }    
+    print("NOT MAKING IT IN LOGINI CONTORLLER IF");
+
+  }///////////////////////////////////////////End 
+  
 
   /////////////////////////////////////////////Navigate to New Page
   void popupMenuSelected(var menu) {
@@ -94,7 +122,7 @@ class LoginController {
           ));
     }
   }
-  /////////////////////////////////////////////End Nav
+  /////////////////////////////////////////////End 
   ///
   ///
   ///
