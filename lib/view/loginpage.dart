@@ -1,6 +1,7 @@
 //create class
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../controller/loginController.dart';
+
 
 class LoginPage extends StatefulWidget {
   //manditory override
@@ -15,10 +16,15 @@ class LoginPage extends StatefulWidget {
 //This is the current state of the page
 class LoginPageState extends State<LoginPage> {
   //variables
+  LoginController controller;
+  //allows controller to have access to context
+  BuildContext context;
+  
 
   //constructor
   LoginPageState() {
     //intialize values
+    controller = LoginController(this);
   }
 
   //set state method to update screen
@@ -31,6 +37,8 @@ class LoginPageState extends State<LoginPage> {
   //manditory override
   @override
   Widget build(BuildContext context) {
+    //store context information in the instance variable
+    this.context = context;
     //creates Scaffold
     //Scaffold is foundation app
     return Scaffold(
@@ -49,11 +57,17 @@ class LoginPageState extends State<LoginPage> {
         actions: <Widget>[
           //represent strings
           PopupMenuButton<String>(
-            //gets selected button/popupmenuitem
+            //Prints selected button/popupmenuitem
             onSelected: (value) {
               //prints value of selected menu button
               print("Menu: " + value);
+              //calls function
+              controller.popupMenuSelected(value);
             },
+
+            //Calls function to hand pressed button
+            //onSelected: controller.popupMenuSelected,
+            
             //calling from cotroller not appbar
 
             itemBuilder: (BuildContext context) {
@@ -65,6 +79,7 @@ class LoginPageState extends State<LoginPage> {
                   //how we want to display
                   child: Text("Register"),
                 ),
+                
               ];
             },
           )
@@ -88,6 +103,8 @@ class LoginPageState extends State<LoginPage> {
                   decoration: InputDecoration(
                       icon: Icon(Icons.email), hintText: "Email Address"),
                   keyboardType: TextInputType.emailAddress,
+                  //validator: controller.validateNum1,
+                  //onSaved: controller.saveNum1(),
                   autocorrect: false,
                 ),
 

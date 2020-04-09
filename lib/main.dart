@@ -1,7 +1,6 @@
 //using material design in this package. 
 import 'package:flutter/material.dart';
-import 'package:iotfinal/view/homepage.dart';
-import 'package:iotfinal/view/loginpage.dart';
+import './view/loginPage.dart';
 
 
 
