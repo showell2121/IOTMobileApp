@@ -1,36 +1,44 @@
-import '../model/regUser.dart';
+import '../view/loginPage.dart';
 
+import '../model/regUser.dart';
+import 'package:flutter/material.dart';
 import '../view/registrationPage.dart';
 
-class RegistrationController {
+import "./firebase.dart";
 
+class RegistrationController {
   //creates LoginPage state
   RegistrationPageState state;
 
   //Reg User object
   RegUser user = RegUser();
 
-  //Set constructor to current state.// same as: state = value; 
-  RegistrationController(this.state);
+  String tempPass;
 
+  //Set constructor to current state.// same as: state = value;
+  RegistrationController(this.state);
 
   ///////////////////////////////Save user input
   void saveEmail(String value) {
     //saves userinput email to object
     user.email = value;
   }
+
   void savePassword(String value) {
     //saves userinput pass to object
     user.password = value;
   }
+
   void saveConfirmPass(String value) {
     //saves userinput email to object
     user.confirmPass = value;
   }
+
   void saveCity(String value) {
     //saves userinput pass to object
     user.city = value;
   }
+
   void saveState(String value) {
     //saves userinput email to object
     user.state = value;
@@ -38,25 +46,28 @@ class RegistrationController {
 
   void savePhone(String value) {
     //saves userinput pass to object
-    user.phone = value;    
+    user.phone = value;
   }
+
   void saveTerms(bool value) {
     //saves userinput pass to object
-    user.terms = value;    
+    user.terms = value;
   }
-///////////////////////////////////end 
-///
+
+///////////////////////////////////end
+  ///
 //////////////////////////////////Validate textfield for errors
-String validateEmail(String value) {
+  String validateEmail(String value) {
     if (value.contains('@') && value.contains('.') && value.length > 6) {
       return null;
     } else {
       return 'Not A Valid Email. (Include @  .)';
     }
   }
-  
+
   String validatePass(String value) {
     if (value.length > 7) {
+      tempPass = value;
       return null;
     } else {
       return 'Password Must Be 8 Characters';
@@ -64,15 +75,15 @@ String validateEmail(String value) {
   }
 
   String validateConfirmPass(String value) {
-    if (value.length > 7) {
+    if (tempPass == value) {
       return null;
     } else {
-      return 'Password Must Be 8 Characters';
+      return 'Passwords Dont Match';
     }
   }
 
   String validatePhone(String value) {
-    if (value.length > 9) {
+    if (value.length == 10) {
       return null;
     } else {
       return 'Phone Number Must Be 10 Digits';
@@ -80,31 +91,30 @@ String validateEmail(String value) {
   }
 
   String validateCity(String value) {
-    if (value != null) {
+    if (value.length > 2) {
       return null;
     } else {
       return 'Must Enter City';
     }
   }
-  
+
   String validateState(String value) {
     if (value != null) {
       return null;
     } else {
-      return 'Must Enter State';
+      return 'Must Select A State';
     }
   }
 
   /////////////////////////////////////////////////End
 
 //////////////////////////////////////Save User Input
-  void register() async{
-
-    
+  void register() async {
     //make sure all input fields are correct
     //calling all the validators back at the loginpage
-    if (state.formKey.currentState.validate()) {
-
+    if (state.formKey.currentState.validate() &&
+        user.terms != null &&
+        user.terms != false) {
       //Saves user data
       //when .save() is called, all onsave: functions in loginPage will be called and object
       //will be intialized
@@ -112,40 +122,31 @@ String validateEmail(String value) {
 
       // try{
 
-         print("////////////////////////////////// LOGIN");
-         print(user.email);
-         print(user.password);
-         print(user.city);
-         print(user.state);
-         print(user.terms);
-         print(user.email);
-         print("////////////////////////////////// LOGIN");
+      print("////////////////////////////////// LOGIN");
+      print(user.email);
+      print(user.password);
+      print(user.city);
+      print(user.state);
+      print(user.terms);
+      print("////////////////////////////////// LOGIN");
 
-      //   user.uid = await Firebase.login(email: user.email, password: user.password);
+      bool value = await Firebase.createAccount(user);
 
-      //   Navigator.push(
-      //     state.context,
-      //     MaterialPageRoute(
-      //       //shorthand notation. return destin.. with brackets
-      //       builder: (BuildContext context) => HomePage(),
-      //     ));
-      // }catch(err){
-      //   print("ERROR: In login() loignController");
-      // }
-      
-      // if(user.uid != null){
+      if (value) {
+        try {
+          Navigator.push(
+              state.context,
+              MaterialPageRoute(
+                //shorthand notation. return destin.. with brackets
+                builder: (BuildContext context) => LoginPage(),
+              ));
+        } catch (err) {
+          print("ERROR: In login() loignController");
+        }
+      }
+    }
 
-      // }
-      //login in to Firebase;
-
-    }    
     print("NOT MAKING IT IN LOGINI CONTORLLER IF");
+  } //////////
 
-  }//////////
-
-
-
-
-
-
-}//end of class
+} //end of class

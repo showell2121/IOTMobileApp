@@ -6,5 +6,6 @@ class RegUser {
   String city;
   String state;
   bool terms;
+  String uid;
 
 }

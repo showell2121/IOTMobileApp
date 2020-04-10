@@ -23,7 +23,11 @@ class RegistrationPageState extends State<RegistrationPage> {
 
   var timeDilation;
 
+  String dropdownValue = '---Select State---';
+
   bool checkboxValue = false;
+
+  String selectedSalutation;
 
   RegistrationPageState() {
     //pass this current state
@@ -61,7 +65,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                         decoration: InputDecoration(
                             icon: Icon(Icons.email), hintText: "Email Address"),
                         keyboardType: TextInputType.emailAddress,
-                        validator: controller.validateEmail,                        
+                        validator: controller.validateEmail,
                         autocorrect: false,
                         onSaved: controller.saveEmail,
                       ),
@@ -104,7 +108,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           icon: Icon(Icons.phone),
                           hintText: "10 digits: 4051111111",
                         ),
-                        
+
                         //set keyboard
                         keyboardType: TextInputType.phone,
                         autocorrect: false,
@@ -118,7 +122,7 @@ class RegistrationPageState extends State<RegistrationPage> {
                           icon: Icon(Icons.location_city),
                           hintText: "City",
                         ),
-                        
+
                         //set keyboard
                         keyboardType: TextInputType.text,
                         autocorrect: false,
@@ -126,34 +130,108 @@ class RegistrationPageState extends State<RegistrationPage> {
                         onSaved: controller.saveCity,
                       ),
 
-                      //Create textfield for password
-                      TextFormField(
-                        decoration: InputDecoration(
-                          icon: Icon(Icons.location_city),
-                          hintText: "State",
+                      // //Create textfield for password
+                      // TextFormField(
+                      //   decoration: InputDecoration(
+                      //     icon: Icon(Icons.location_city),
+                      //     hintText: "State",
+                      //   ),
+
+                      //   //set keyboard
+                      //   keyboardType: TextInputType.text,
+                      //   autocorrect: false,
+                      //   validator: controller.validateState,
+                      //   onSaved: controller.saveState,
+                      // ),
+
+                      // Icon(
+                      //   Icons.location_city,
+                      //   color: Colors.green,
+                      //   size: 30.0,
+                      // ),
+
+                      DropdownButtonFormField<String>(
+                        value: selectedSalutation,
+                        hint: Text(
+                          'State',
                         ),
-                        
-                        //set keyboard
-                        keyboardType: TextInputType.text,
-                        autocorrect: false,
-                        validator: controller.validateState,
-                        onSaved: controller.saveState,
+                        onChanged: (salutation) =>
+                            setState(() => selectedSalutation = salutation),
+                            onSaved: controller.saveState,
+                        validator: controller.validateState,                            
+                        items: [
+                          "Alabama",
+                          "Alaska",
+                          "Arizona",
+                          "Arkansas",
+                          "California",
+                          "Colorado",
+                          "Connecticut",
+                          "Delaware",
+                          "Florida",
+                          "Hawaii",
+                          "Idaho",
+                          "Illinois",
+                          "Indiana",
+                          "Iowa",
+                          "Kansas",
+                          "Kentucky",
+                          "Louisiana",
+                          "Maine",
+                          "Maryland",
+                          "Massachusetts",
+                          "Michigan",
+                          "Minnesota",
+                          "Mississippi",
+                          "Missouri",
+                          "Montana",
+                          "Nebraska",
+                          "Nevada",
+                          "New Hampshire",
+                          "New Jersey",
+                          "New Mexico",
+                          "New York",
+                          "North Carolina",
+                          "North Dakota",
+                          "Ohio",
+                          "Oklahoma",
+                          "Oregon",
+                          "Pennsylvania",
+                          "Rhode Island",
+                          "South Carolina",
+                          "South Dakota",
+                          "Tennessee",
+                          "Texas",
+                          "Utah",
+                          "Vermont",
+                          "Virginia",
+                          "Washington",
+                          "oWest Virginiane",
+                          "Wisconsin",
+                          'Wyoming']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
                       ),
+                     
 
                       CheckboxListTile(
                         title: const Text('Agree to terms and conditions'),
                         value: checkboxValue,
                         onChanged: (bool value) {
-
                           //print("Value ////////////////// ${value} ");
-                          setState(() {
-                            //changes value of the box. 
-                            checkboxValue = value;
-                            controller.saveTerms(value);
-                            
-                          });
+                          setState(
+                            () {
+                              //changes value of the box.
+                              checkboxValue = value;
+                              controller.saveTerms(value);
+                            },
+                          );
                         },
-                        
+
                         //secondary: const Icon(Icons.pages),
                       ),
 
