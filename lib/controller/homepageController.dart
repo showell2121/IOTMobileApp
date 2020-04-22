@@ -51,16 +51,16 @@ class HomePageController {
     
   }
 
-  String validateAmount(String value) {
-    print("in Valid");
+  String validateAmount(String value) {    
     if (value.length > 0) {
+      this.state.amount = int.parse(value);
       return null;
     } else {
       return 'Must Enter A Number';
     }
   }
 
-  void saveAmount(String value){    
+  void saveAmount(String value){        
     this.amount = value;
   }  
 
@@ -78,6 +78,8 @@ class HomePageController {
       if(!feed.data["Feed"]){
         //changes value to true
         await Firestore.instance.collection("CatFeeder").document("RPi").updateData({"Feed": true});
+       
+        await Firestore.instance.collection("CatFeeder").document("RPi").updateData({"AmountOfFood": this.state.amount});
       }else{
         state.stateChanged((){
           state.message = "Currently Feeding, Try Back in ${feed.data["AmountOfFood"]} Seconds.";

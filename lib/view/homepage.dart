@@ -37,6 +37,9 @@ class HomePageState extends State<HomePage> {
   //cant send message
   var message = "";
 
+  //amount
+  int amount = -6;
+
   //Youtube
   YoutubePlayerController _controller;
 
@@ -62,7 +65,7 @@ class HomePageState extends State<HomePage> {
         mute: false,
         autoPlay: true,
         disableDragSeek: false,
-        loop: false,
+        loop: true,
         isLive: false,
         forceHideAnnotation: true,
         forceHD: false,
@@ -97,6 +100,8 @@ class HomePageState extends State<HomePage> {
       //Second item is Scaffold//////////////////////////////////////////////
       body: Column(
         children: <Widget>[
+
+          //Playes youtube video. 
           YoutubePlayer(
               controller: _controller,
               showVideoProgressIndicator: true,
