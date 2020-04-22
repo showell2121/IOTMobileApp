@@ -3,9 +3,15 @@
 import 'package:flutter/cupertino.dart';
 //google style desing
 import 'package:flutter/material.dart';
+//Youtube
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 
 //imports controller
 import "../controller/homepageController.dart";
+
+//Youtube
 
 //create class
 class HomePage extends StatefulWidget {
@@ -31,6 +37,9 @@ class HomePageState extends State<HomePage> {
   //cant send message
   var message = "";
 
+  //Youtube
+  YoutubePlayerController _controller;
+
   //constructor
   HomePageState() {
     //intialize values
@@ -42,6 +51,24 @@ class HomePageState extends State<HomePage> {
   void stateChanged(Function f) {
     //actually sets the state of the page and refreshes
     setState(f);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: "ul1H_p_FeaA",
+      flags: YoutubePlayerFlags(
+        mute: false,
+        autoPlay: true,
+        disableDragSeek: false,
+        loop: false,
+        isLive: false,
+        forceHideAnnotation: true,
+        forceHD: false,
+        enableCaption: true,
+      ),
+    );
   }
 
   //manditory override
@@ -69,7 +96,22 @@ class HomePageState extends State<HomePage> {
 
       //Second item is Scaffold//////////////////////////////////////////////
       body: Column(
-        children: <Widget>[         
+        children: <Widget>[
+          YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              progressIndicatorColor: Colors.blueAccent,
+              topActions: <Widget>[
+                SizedBox(width: 8.0),
+                Expanded(
+                    child: Text(
+                  "Automatic Cat Feeder",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                  ),
+                ))
+              ]),
 
           //Form
           Form(
@@ -132,10 +174,11 @@ class HomePageState extends State<HomePage> {
                     // ),
 
                     Center(
-                      child:
-                      Text(message, style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),),
+                      child: Text(
+                        message,
+                        style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
+                      ),
                     ),
-                    
 
                     //create Button
                     RaisedButton(
