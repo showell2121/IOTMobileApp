@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 //import '../model/user.dart';
 import '../controller/loginController.dart';
-
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatefulWidget {
   //manditory override
@@ -23,8 +23,8 @@ class LoginPageState extends State<LoginPage> {
   //form key
   var formKey = GlobalKey<FormState>();
 
-  //User user = new User();
-  
+  //cant send message
+  var message = "";
 
   //constructor
   LoginPageState() {
@@ -72,7 +72,7 @@ class LoginPageState extends State<LoginPage> {
 
             //Calls function to hand pressed button
             //onSelected: controller.popupMenuSelected,
-            
+
             //calling from cotroller not appbar
 
             itemBuilder: (BuildContext context) {
@@ -84,7 +84,6 @@ class LoginPageState extends State<LoginPage> {
                   //how we want to display
                   child: Text("Register"),
                 ),
-                
               ];
             },
           )
@@ -100,45 +99,55 @@ class LoginPageState extends State<LoginPage> {
 
           //Form
           Form(
-            key: formKey,
+              key: formKey,
               child: Expanded(
-            child: ListView(
-              children: <Widget>[
-                //Create text field for username
-                TextFormField(
-                  decoration: InputDecoration(
-                      icon: Icon(Icons.email), hintText: "Email Address"),
-                  keyboardType: TextInputType.emailAddress,
-                  validator: controller.validateEmail,
-                  onSaved: controller.saveEmail,
-                  autocorrect: false,
+                child: ListView(
+                  children: <Widget>[
+
+
+
+                    //Create text field for username
+                    TextFormField(
+                      decoration: InputDecoration(
+                          icon: Icon(Icons.email), hintText: "Email Address"),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: controller.validateEmail,
+                      onSaved: controller.saveEmail,
+                      autocorrect: false,                      
+                    ),
+
+                    //Create textfield for password
+                    TextFormField(
+                      decoration: InputDecoration(
+                        icon: Icon(Icons.security),
+                        hintText: "Password",
+                      ),
+
+                      //show text back to user
+                      obscureText: true,
+                      //set keyboard
+                      keyboardType: TextInputType.visiblePassword,
+                      autocorrect: false,
+                      validator: controller.validatePass,
+                      onSaved: controller.savePassword,
+                    ),
+
+                    //error message
+                    Center(
+                      child: Text(
+                        message,
+                        style: TextStyle(color: Color.fromARGB(255, 255, 0, 0)),
+                      ),
+                    ),
+
+                    //create Button
+                    RaisedButton(
+                      child: Text("Login"),
+                      onPressed: controller.login,
+                    )
+                  ],
                 ),
-
-                //Create textfield for password
-                TextFormField(
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.security),
-                    hintText: "Password",
-                  ),
-
-                  //show text back to user
-                  obscureText: true,
-                  //set keyboard
-                  keyboardType: TextInputType.visiblePassword,
-                  autocorrect: false,
-                  validator: controller.validatePass,
-                  onSaved: controller.savePassword,
-                ),
-
-                //create Button
-                RaisedButton(
-                  child: Text("Login"),
-                  onPressed: controller.login,
-                )
-
-              ],
-            ),
-          )),
+              )),
 
           // //Column first item
           // Text(

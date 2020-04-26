@@ -8,12 +8,10 @@ import "../view/registrationPage.dart";
 import "./firebase.dart";
 
 class LoginController {
-
   //creates LoginPage state
-  LoginPageState state;  
+  LoginPageState state;
 
   User user = User();
-  
 
   //Set constructor to current state.// same as: state = value;
   LoginController(this.state);
@@ -60,48 +58,44 @@ class LoginController {
     }
   }
 
-  //////////////////////////////////////End 
+  //////////////////////////////////////End
   ///
   //////////////////////////////////////Save User Input
-  void login() async{
-
+  void login() async {   
     
     //make sure all input fields are correct
     //calling all the validators back at the loginpage
     if (state.formKey.currentState.validate()) {
-
       //Saves user data
       //when .save() is called, all onsave: functions in loginPage will be called and object
       //will be intialized
-      state.formKey.currentState.save();
+      state.formKey.currentState.save();     
 
-      try{
-
+      try {
         //print("////////////////////////////////// LOGIN");
         //print(user.email);
 
-        user.uid = await Firebase.login(email: user.email, password: user.password);
+        user.uid =
+            await Firebase.login(email: user.email, password: user.password);
+
+            state.message = "";
 
         Navigator.push(
-          state.context,
-          MaterialPageRoute(
-            //shorthand notation. return destin.. with brackets
-            builder: (BuildContext context) => HomePage(),
-          ));
-      }catch(err){
-        print("ERROR: In login() loignController");
-      }
-      
-      if(user.uid != null){
-
+            state.context,
+            MaterialPageRoute(
+              //shorthand notation. return destin.. with brackets
+              builder: (BuildContext context) => HomePage(),
+            ));
+      } catch (err) {
+        state.stateChanged(() {
+          state.message = "The Email or Password You Entered is Incorrect.";
+        });
+        //print("Error COunt no log in");
       }
       //login in to Firebase;
 
-    }    
-    print("NOT MAKING IT IN LOGINI CONTORLLER IF");
-
-  }///////////////////////////////////////////End 
-  
+    } 
+  } ///////////////////////////////////////////End
 
   /////////////////////////////////////////////Navigate to New Page
   void popupMenuSelected(var menu) {
@@ -122,7 +116,7 @@ class LoginController {
           ));
     }
   }
-  /////////////////////////////////////////////End 
+  /////////////////////////////////////////////End
   ///
   ///
   ///
