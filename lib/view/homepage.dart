@@ -60,13 +60,13 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: "v1wunhYRmtI",
+      initialVideoId: "DHqz6yE9UsE",
       flags: YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
         disableDragSeek: false,
         loop: true,
-        isLive: false,
+        isLive: true,
         forceHideAnnotation: true,
         forceHD: false,
         enableCaption: true,
